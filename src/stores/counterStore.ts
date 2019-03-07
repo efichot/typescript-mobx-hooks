@@ -1,8 +1,12 @@
-import { observable } from 'mobx';
-import { createContext } from 'react';
+import { observable } from "mobx"
+import { create, persist } from "mobx-persist"
+import { createContext } from "react"
 
+const hydrate = create()
 class counterStore {
-  @observable count = 0;
+  @persist @observable count: number = 0
 }
 
-export default createContext(new counterStore());
+const store = new counterStore()
+export default createContext(store)
+hydrate("counterStore", store)
